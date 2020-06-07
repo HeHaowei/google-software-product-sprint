@@ -1,34 +1,12 @@
-/* #content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
-}
-
 #greeting-container {
   margin-top: 20px;
   color: white;
-} */
+}
 
 body {
     margin: 0;
     padding: 0; 
 }
-
-/*h1 {
-    color: white;
-    text-align: center;
-}
-
-h2 {
-    color: white;
-    text-align: center;
-}
-
-p {
-    color: white;
-    font-family: verdana;
-    font-size: 20px;
-} */
 
  *{
       margin: 0;

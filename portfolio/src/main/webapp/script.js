@@ -27,14 +27,17 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-// function addRandomGreeting() {
-//   const greetings =
-//       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+/**
+ * This function is to get data from "/data" Servlet 
+ */
+ 
+function getDataFromDataServlet() {
+//   fetch('/data').then(response => response.text()).then((quote) => {
+//     document.getElementById('quote-container').innerText = quote;
+//   });
 
-//   // Pick a random greeting.
-//   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+     fetch('/data').then(response => response.text()).then((helloMessage) => {
+         document.getElementById('hello-message').innerHTML=helloMessage;
+     });
+}
 
-//   // Add it to the page.
-//   const greetingContainer = document.getElementById('greeting-container');
-//   greetingContainer.innerText = greeting;
-// }
