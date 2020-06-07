@@ -32,9 +32,6 @@ function addRandomGreeting() {
  */
  
 function getDataFromDataServlet() {
-//   fetch('/data').then(response => response.text()).then((quote) => {
-//     document.getElementById('quote-container').innerText = quote;
-//   });
 
      fetch('/data').then(response => response.text()).then((helloMessage) => {
          document.getElementById('hello-message').innerHTML=helloMessage;
