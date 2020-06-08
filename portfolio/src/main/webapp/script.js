@@ -33,8 +33,25 @@ function addRandomGreeting() {
  
 function getDataFromDataServlet() {
 
-     fetch('/data').then(response => response.text()).then((helloMessage) => {
-         document.getElementById('hello-message').innerHTML=helloMessage;
+    //  fetch('/data').then(response => response.text()).then((helloMessage) => {
+    //      document.getElementById('hello-message').innerHTML=helloMessage;
+    //  });
+
+    fetch('/data').then(response => response.json()).then((messages) => {
+         console.log(messages);
+         const messageElement = document.getElementById('hello-message');
+         messageElement.innerHTML="<h3>Comments:</h3>";
+         const messageListElement = document.createElement('ul');
+         for (msg of messages) {
+             messageListElement.appendChild(createListElement(msg));
+         }
+         messageElement.appendChild(messageListElement);
      });
+}
+
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
 
