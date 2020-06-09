@@ -37,21 +37,21 @@ function getDataFromDataServlet() {
     //      document.getElementById('hello-message').innerHTML=helloMessage;
     //  });
 
-    fetch('/data').then(response => response.json()).then((messages) => {
-         console.log(messages);
-         const messageElement = document.getElementById('hello-message');
-         messageElement.innerHTML="<h3>Comments:</h3>";
-         const messageListElement = document.createElement('ul');
-         for (msg of messages) {
-             messageListElement.appendChild(createListElement(msg));
+    fetch('/data').then(response => response.json()).then((comments) => {
+         const commentsElement = document.getElementById('comment-list');
+         commentsElement.innerHTML="<h3>Comments:</h3>";
+         const commentListElement = document.createElement('ul');
+         for (comment of comments) {
+             commentListElement.appendChild(createListElement(comment));
          }
-         messageElement.appendChild(messageListElement);
+         commentsElement.appendChild(commentListElement);
      });
 }
 
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+function createListElement(comment) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'comment';
+  commentElement.innerText = comment.message;
+  return commentElement;
 }
 
