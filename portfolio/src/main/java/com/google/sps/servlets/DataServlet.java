@@ -29,10 +29,10 @@ public class DataServlet extends HttpServlet {
   
   public void init(){
       messages = new ArrayList<String>();
-      messages.add("This is the first message.");
-      messages.add("This is the second message! ");
-      messages.add("Third message come in.");
-      messages.add("Last message!");
+    //   messages.add("This is the first message.");
+    //   messages.add("This is the second message! ");
+    //   messages.add("Third message come in.");
+    //   messages.add("Last message!");
   }
 
   @Override
@@ -48,6 +48,20 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    if (messages.isEmpty()) {
+        messages = new ArrayList<String>();
+    }  
+
+    String commentMessage = getParameter(request, "comment-area");
+    if (!commentMessage.isEmpty()) {
+        messages.add(commentMessage);
+    }
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+  }
+
  /**
    * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
    * the Gson library dependency to pom.xml.
@@ -56,6 +70,14 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(message);
     return json;
+  }
+
+/**
+  * Get parameter from user input.
+  */
+  private String getParameter(HttpServletRequest request, String name) {      
+      String parameter = request.getParameter(name);
+      return parameter;
   }
 
 }
