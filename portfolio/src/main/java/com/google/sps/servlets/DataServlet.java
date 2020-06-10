@@ -18,6 +18,9 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -38,16 +41,26 @@ public class DataServlet extends HttpServlet {
   
   public void init(){
       comments = new ArrayList<Comment>();
-    //   messages.add("This is the first message.");
-    //   messages.add("This is the second message! ");
-    //   messages.add("Third message come in.");
-    //   messages.add("Last message!");
+
+      //load current comments from datastore
+      Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      PreparedQuery results = datastore.prepare(query);
+      for (Entity entity : results.asIterable()) {
+        long id = entity.getKey().getId();
+        String message = (String) entity.getProperty("message");
+        long timestamp = (long) entity.getProperty("timestamp");
+        Comment comment = new Comment(id, message, timestamp);
+        comments.add(comment);
+    }
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
     // response.setContentType("text/html;");
     // response.getWriter().println("<h1>Hello HE HAOWEI!</h1>");
+    
     comments = new ArrayList<Comment>();
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -71,22 +84,20 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
-    // if (messages.isEmpty()) {
-    //     messages = new ArrayList<Comment>();
-    // }  
 
     String commentMessage = getParameter(request, "comment-area");
     Entity messageEntity = new Entity("Comment");
     if (!commentMessage.isEmpty()) {
-        // messages.add(commentMessage);
         long timestamp = System.currentTimeMillis();
         messageEntity.setProperty("message", commentMessage);
         messageEntity.setProperty("timestamp", timestamp);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(messageEntity);
+        Key key = datastore.put(messageEntity);
+        // Comment comment = new Comment(messageEntity.getKey().getId(), commentMessage, timestamp);
+        // comments.add(0, comment);
     }
     // Redirect back to the HTML page.
+    // 
     response.sendRedirect("/index.html");
   }
 

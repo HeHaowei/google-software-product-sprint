@@ -510,6 +510,81 @@ footer {
   font-size: 18px;
 }
 
+.message{
+    margin-top: 50px;
+    height: auto;
+    border: 1px solid #EEEEEE;
+    background-color: #EEEEEE;
+    box-shadow: 5px 5px 10px #EEEEEE;
+    padding: 50px;
+    margin: 0;
+}
+
+.btn-success{
+    float:right;
+}
+
+#data{
+    margin-top: 50px;
+    height: auto;
+    border: 1px solid #EEEEEE;
+    background-color: #EEEEEE;
+    box-shadow: 5px 5px 10px #EEEEEE;
+    padding: 50px;
+    margin: 0;
+}
+
+#comment-area{
+    width: 100%;
+    height: 150px;
+}
+
+.message textarea:-ms-input-placeholder {
+	color: #fff
+}
+
+.message textarea::-moz-placeholder {
+	color: #fff;
+	opacity: 1
+}
+
+.message textarea:focus {
+	outline: none;
+	background: #fff;
+}
+
+.message textarea {
+    background: #e4e4ea;
+	height: 150px;
+	resize: none
+}
+
+.comment{
+    list-style-type:none;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 100%;
+    background-color: #EEEEEE;
+    border: 1px solid #EBEBEB;
+    border-radius: 25px;
+    box-shadow: 1px 1px 8px #333333;
+    color: #000000;
+    height: auto;
+    padding: 50px;
+}
+
+.time{
+    width: auto;
+    font-size: 15px;
+}
+
+.msg{
+    border: 1px solid #E4B9B9;
+    padding: 15px;
+    box-shadow: 2px 2px 15px #EEEEEE;
+    font-size: medium;
+}
+
 @media only screen and (max-width: 768px) {
 	header {
 		position: fixed;

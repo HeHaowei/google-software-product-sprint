@@ -20,10 +20,17 @@ public final class Comment {
   private final long id;
   private final String message;
   private final long timestamp;
+  static long default_id = -1;
 
   public Comment(long id, String message, long timestamp) {
     this.id = id;
     this.message = message;
     this.timestamp = timestamp;
+  }
+
+  public Comment(String message, long timestamp) {
+      this.id = default_id;
+      this.message = message;
+      this.timestamp = timestamp;
   }
 }
