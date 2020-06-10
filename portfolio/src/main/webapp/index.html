@@ -37,7 +37,7 @@
                 <a href="#contact">Contact</a>
             </li>
             <li>
-                <a href=".message">Comments</a>
+                <a href="#comments">Comments</a>
             </li>
         </ul>
     </header>
@@ -167,19 +167,21 @@
     </div>
     <!-- End #contact-card -->
 
-    <div class="message">
-        <h3>Comments</h3>
-        <form action="/data" method="POST">
-            <textarea name="comment-area" id="comment-area" placeholder="leave your comment here..." required ></textarea>
-            <!-- <input type="text" name="leave-comments" value="Leave your  comments..."> -->
-            <br/>
-            <input type="submit" class="btn-success"/>
-        </form>
-    </div> 
+   <div id="comments">
+        <div class="message">
+            <h3>Comments</h3>
+            <form action="/data" method="POST">
+                <textarea name="comment-area" id="comment-area" placeholder="leave your comment here..." required ></textarea>
+                <!-- <input type="text" name="leave-comments" value="Leave your  comments..."> -->
+                <br/>
+                <input type="submit" class="btn-success"/>
+            </form>
+        </div> 
 
-    <div id="data">
-        <!-- <button onclick="getDataFromDataServlet()">HelloMessage</button> -->
-        <div id="comment-list"></div>
+        <div id="data">
+            <!-- <button onclick="getDataFromDataServlet()">HelloMessage</button> -->
+            <div id="comment-list"></div>
+        </div>
     </div>
 
     <footer>
