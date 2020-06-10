@@ -11,9 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
   </head>
-  <body>
+  <body onload="getDataFromDataServlet()">
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
@@ -59,18 +58,6 @@
         <!-- End #lead-down -->
     </div>
     <!-- End #lead -->
-
-    <!-- <div id="content" class="container">
-        <div class="container p-3 my-3 bg-dark text-white"> 
-            <h1>He Haowei's Portfolio</h1>
-            <p>This is He Haowei's portfolio.</p>
-            <p>I am a:</p>
-            <button onclick="addRandomGreeting()">Click Me</button>
-            <div id="greeting-container"></div>
-        </div>
-    </div> -->
-
-
 
      <div id="about">
          <div class="container">
@@ -176,6 +163,19 @@
         </div>
     </div>
     <!-- End #contact-card -->
+
+    <form action="/data" method="POST">
+        <p> Comments: </p>
+        <textarea name="comment-area">Leave your comments here </textarea>
+        <!-- <input type="text" name="leave-comments" value="Leave your  comments..."> -->
+        <br/>
+        <input type="submit" />
+    </form>
+
+    <div id="data">
+        <!-- <button onclick="getDataFromDataServlet()">HelloMessage</button> -->
+        <div id="comment-list"></div>
+    </div> 
 
         <footer>
         <div class="container">
