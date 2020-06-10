@@ -37,31 +37,11 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private ArrayList<Comment> comments;
   
-  public void init(){
-      comments = new ArrayList<Comment>();
-
-      //load current comments from datastore
-      Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      PreparedQuery results = datastore.prepare(query);
-      for (Entity entity : results.asIterable()) {
-        long id = entity.getKey().getId();
-        String message = (String) entity.getProperty("message");
-        long timestamp = (long) entity.getProperty("timestamp");
-        Comment comment = new Comment(id, message, timestamp);
-        comments.add(comment);
-    }
-  }
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    // response.setContentType("text/html;");
-    // response.getWriter().println("<h1>Hello HE HAOWEI!</h1>");
-    
-    comments = new ArrayList<Comment>();
+    ArrayList<Comment>  comments = new ArrayList<Comment>();
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -93,8 +73,6 @@ public class DataServlet extends HttpServlet {
         messageEntity.setProperty("timestamp", timestamp);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key key = datastore.put(messageEntity);
-        // Comment comment = new Comment(messageEntity.getKey().getId(), commentMessage, timestamp);
-        // comments.add(0, comment);
     }
     // Redirect back to the HTML page.
     // 
