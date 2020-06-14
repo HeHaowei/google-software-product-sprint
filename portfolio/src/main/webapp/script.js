@@ -39,7 +39,6 @@ function getDataFromDataServlet() {
 
     fetch('/data').then(response => response.json()).then((comments) => {
          const commentsElement = document.getElementById('comment-list');
-         commentsElement.innerHTML="<h3>Comments:</h3>";
          const commentListElement = document.createElement('ul');
          for (comment of comments) {
              commentListElement.appendChild(createListElement(comment));
@@ -51,7 +50,38 @@ function getDataFromDataServlet() {
 function createListElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
-  commentElement.innerText = comment.message;
+  
+  const timestampElement = document.createElement('h4');
+  const messageElement = document.createElement('p');
+  timestampElement.setAttribute('class', 'time');
+  messageElement.setAttribute('class', 'msg');
+  messageElement.innerText = comment.message;
+  timestampElement.innerText = convertTime(comment.timestamp);
+
+  commentElement.appendChild(messageElement);
+  commentElement.appendChild(timestampElement);
+
   return commentElement;
+}
+
+function convertTime(timestamp) {
+    var date = new Date(timestamp);
+    // Hours part from the timestamp
+    var hours = date.getHours();
+    // Minutes part from the timestamp
+    var minutes = "0" + date.getMinutes();
+    // Seconds part from the timestamp
+    var seconds = "0" + date.getSeconds();
+
+    var year = date.getFullYear();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    var month = months[date.getMonth()];
+    var day = date.getDate();
+
+    // Will display time in 10:30:23 format
+    var formattedTime = month + ' ' + day + ' ' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    return formattedTime;
 }
 

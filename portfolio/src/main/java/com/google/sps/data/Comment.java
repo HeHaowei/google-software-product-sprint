@@ -26,4 +26,5 @@ public final class Comment {
     this.message = message;
     this.timestamp = timestamp;
   }
+
 }
