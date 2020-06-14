@@ -33,10 +33,6 @@ function addRandomGreeting() {
  
 function getDataFromDataServlet() {
 
-    //  fetch('/data').then(response => response.text()).then((helloMessage) => {
-    //      document.getElementById('hello-message').innerHTML=helloMessage;
-    //  });
-
     fetch('/data').then(response => response.json()).then((comments) => {
          const commentsElement = document.getElementById('comment-list');
          const commentListElement = document.createElement('ul');
@@ -84,4 +80,27 @@ function convertTime(timestamp) {
 
     return formattedTime;
 }
+
+/**
+ * This function is to get data from "/data" Servlet and fetch the latest data every 3 seconds 
+ */
+
+var getting = {
+
+        url:'/data',
+        dataType:'json',
+        success:function(res) {
+
+        const commentsElement = document.getElementById('comment-list');
+        commentsElement.innerHTML = '';
+        const commentListElement = document.createElement('ul');
+
+        for (comment of res) {
+            commentListElement.appendChild(createListElement(comment));
+        }
+        commentsElement.appendChild(commentListElement);
+}
+};
+
+window.setInterval(function(){$.ajax(getting)},3000);
 
