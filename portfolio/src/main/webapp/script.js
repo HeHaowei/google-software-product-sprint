@@ -35,6 +35,7 @@ function getDataFromDataServlet() {
 
     fetch('/data').then(response => response.json()).then((comments) => {
          const commentsElement = document.getElementById('comment-list');
+         commentsElement.innerHTML = '';
          const commentListElement = document.createElement('ul');
          for (comment of comments) {
              commentListElement.appendChild(createListElement(comment));
@@ -81,26 +82,5 @@ function convertTime(timestamp) {
     return formattedTime;
 }
 
-/**
- * This function is to get data from "/data" Servlet and fetch the latest data every 3 seconds 
- */
-
-var getting = {
-
-        url:'/data',
-        dataType:'json',
-        success:function(res) {
-
-        const commentsElement = document.getElementById('comment-list');
-        commentsElement.innerHTML = '';
-        const commentListElement = document.createElement('ul');
-
-        for (comment of res) {
-            commentListElement.appendChild(createListElement(comment));
-        }
-        commentsElement.appendChild(commentListElement);
-}
-};
-
-window.setInterval(function(){$.ajax(getting)},3000);
+window.setInterval(getDataFromDataServlet, 3000);
 
