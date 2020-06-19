@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getDataFromDataServlet()">
+  <body onload="getDataFromDataServlet(); getLoginStatus();">
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
@@ -168,6 +168,8 @@
     <!-- End #contact-card -->
 
    <div id="comments">
+       <div id="login">
+        </div>
         <div class="message">
             <h3>Comments</h3>
             <form action="/data" method="POST">

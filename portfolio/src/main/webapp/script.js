@@ -28,6 +28,19 @@ function addRandomGreeting() {
 }
 
 /**
+ * This function is to get the login status of the user
+ */
+function getLoginStatus() {
+    fetch('/login').then(response => response.json()).then((logObject) => {
+        console.log(logObject);
+        const loginElement = document.getElementById('login');
+        loginElement.innerHTML = '<h4>Login Status: '+ logObject.loginStatus + '<h4>';
+    })
+
+}
+
+
+/**
  * This function is to get data from "/data" Servlet 
  */
  
