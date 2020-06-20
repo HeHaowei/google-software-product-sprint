@@ -35,8 +35,23 @@ function getLoginStatus() {
         console.log(logObject);
         const loginElement = document.getElementById('login');
         loginElement.innerHTML = '<h4>Login Status: '+ logObject.loginStatus + '<h4>';
+        if (logObject.loginStatus){
+            loginElement.appendChild(createLogButtonElement(logObject.logoutUrl, 'logout'));
+        }
+        else {
+            loginElement.appendChild(createLogButtonElement(logObject.loginUrl, 'login'));
+        }
     })
 
+}
+
+function createLogButtonElement(logUrl, logText) {
+    const logElement = document.createElement('button');
+    logElement.innerText = logText;
+    logElement.addEventListener("click", function(){
+        window.location.href = logUrl;
+    });
+    return logElement;
 }
 
 
