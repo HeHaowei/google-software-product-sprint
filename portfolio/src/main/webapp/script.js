@@ -31,19 +31,19 @@ function addRandomGreeting() {
  * This function is to get the login status of the user
  */
 function getLoginStatus() {
-    fetch('/login').then(response => response.json()).then((logObject) => {
-        console.log(logObject);
+    fetch('/login').then(response => response.json()).then((loginStatus) => {
+        console.log(loginStatus);
         const commentForm = document.getElementById('comment-form');
         const loginElement = document.getElementById('login');
-        loginElement.innerHTML = '<h4>Login Status: '+ logObject.loginStatus + '</h4>';
-        if (logObject.loginStatus){
-            loginElement.innerHTML = '<h4> You are now logged in as: ' + logObject.userEmail + '</h4>'
-            loginElement.appendChild(createLogButtonElement(logObject.logoutUrl, 'logout'));
+        loginElement.innerHTML = '<h4>Login Status: '+ loginStatus.loginStatus + '</h4>';
+        if (loginStatus.loginStatus){
+            loginElement.innerHTML = '<h4> You are now logged in as: ' + loginStatus.userEmail + '</h4>'
+            loginElement.appendChild(createLogButtonElement(loginStatus.logoutUrl, 'logout'));
             commentForm.style.display="block";
         }
         else {
             loginElement.innerHTML = '<h4> Log in to leave your comment!</h4>'
-            loginElement.appendChild(createLogButtonElement(logObject.loginUrl, 'login'));
+            loginElement.appendChild(createLogButtonElement(loginStatus.loginUrl, 'login'));
             commentForm.style.display="none";
         }
     })

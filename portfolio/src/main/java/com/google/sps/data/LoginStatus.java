@@ -15,44 +15,19 @@
 package com.google.sps.data;
 
 /** A comment message. */
-public final class LogObject {
+public final class LoginStatus {
 
-  private boolean loginStatus = false;
-  private String loginUrl = null;
-  private String logoutUrl = null;
-  private String userEmail = null;
-  private String username = null;
+  public boolean loginStatus;
+  public String loginUrl;
+  public String logoutUrl;
+  public String userEmail;
+  public String username;
 
-  public LogObject() {
+  public LoginStatus() {
       this.loginStatus = false;
       this.loginUrl = null;
       this.logoutUrl = null;
       this.userEmail = null;
       this.username = null;
   }
-
-  public void setLoginStatus(boolean loginStatus) {
-      this.loginStatus = loginStatus;
-  }
-
-  public void setLoginUrl(String loginUrl) {
-      this.loginUrl = loginUrl;
-  }
-
-  public void setLogoutUrl(String logoutUrl) {
-      this.logoutUrl = logoutUrl;
-  }
-
-  public void setUserEmail(String userEmail) {
-      this.userEmail = userEmail;
-  }
-
-  public String getUsername(){
-     return this.username;
-  }
-
-  public void setUsername(String username){
-      this.username = username;
-  }
-
 }

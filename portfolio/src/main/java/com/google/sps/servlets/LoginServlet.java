@@ -19,7 +19,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 import com.google.gson.Gson;
-import com.google.sps.data.LogObject;
+import com.google.sps.data.LoginStatus;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,20 +37,21 @@ public class LoginServlet extends HttpServlet {
     PrintWriter out = response.getWriter();
     UserService userService = UserServiceFactory.getUserService();
 
-    LogObject logObject = new LogObject();
+    LoginStatus loginStatus = new LoginStatus();
 
     // If user is not logged in, show a login form (could also redirect to a login page)
     if (!userService.isUserLoggedIn()) {
         String loginUrl = userService.createLoginURL("/");
-        logObject.setLoginStatus(false);
-        logObject.setLoginUrl(loginUrl); 
-        String json = convertToJsonUsingGson(logObject);
+        loginStatus.loginStatus = false;
+        loginStatus.loginUrl = loginUrl;
+        String json = convertToJsonUsingGson(loginStatus);
         out.println(json);
       return;
     }
-    logObject.setLoginStatus(true);
+
+    loginStatus.loginStatus = true;
     String userEmail = userService.getCurrentUser().getEmail();
-    logObject.setUserEmail(userEmail);
+    loginStatus.userEmail = userEmail;
 
     // If user has not set a nickname, redirect to nickname page
     // String nickname = getUserNickname(userService.getCurrentUser().getUserId());
@@ -63,8 +64,8 @@ public class LoginServlet extends HttpServlet {
 
     // User is logged in and has a nickname, so the request can proceed
     String logoutUrl = userService.createLogoutURL("/");
-    logObject.setLogoutUrl(logoutUrl);
-    String json = convertToJsonUsingGson(logObject);
+    loginStatus.logoutUrl = logoutUrl;
+    String json = convertToJsonUsingGson(loginStatus);
     out.println(json);
 
     // out.println("<p>Hello " + nickname + "!</p>")
@@ -93,9 +94,9 @@ public class LoginServlet extends HttpServlet {
    * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
    * the Gson library dependency to pom.xml.
    */
-  private String convertToJsonUsingGson(LogObject logObject) {
+  private String convertToJsonUsingGson(LoginStatus loginStatus) {
     Gson gson = new Gson();
-    String json = gson.toJson(logObject);
+    String json = gson.toJson(loginStatus);
     return json;
   }
 }
