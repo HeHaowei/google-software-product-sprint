@@ -52,6 +52,7 @@ public class DataServlet extends HttpServlet {
       long id = entity.getKey().getId();
       String message = (String) entity.getProperty("message");
       long timestamp = (long) entity.getProperty("timestamp");
+      String userEmail = (String) entity.getProperty("userEmail");
 
       Comment comment = new Comment(id, message, timestamp);
       comments.add(comment);
@@ -68,12 +69,15 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    UserService userService = UserServiceFactory.getUserService();
     String commentMessage = getParameter(request, "comment-area");
     Entity messageEntity = new Entity("Comment");
+    String userEmail = userService.getCurrentUser().getEmail();
     if (!commentMessage.isEmpty()) {
         long timestamp = System.currentTimeMillis();
         messageEntity.setProperty("message", commentMessage);
         messageEntity.setProperty("timestamp", timestamp);
+        messageEntity.setProperty("userEmail", userEmail);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(messageEntity);
     }

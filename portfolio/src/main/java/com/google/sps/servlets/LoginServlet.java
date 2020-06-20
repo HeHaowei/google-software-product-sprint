@@ -49,6 +49,8 @@ public class LoginServlet extends HttpServlet {
       return;
     }
     logObject.setLoginStatus(true);
+    String userEmail = userService.getCurrentUser().getEmail();
+    logObject.setUserEmail(userEmail);
 
     // If user has not set a nickname, redirect to nickname page
     // String nickname = getUserNickname(userService.getCurrentUser().getUserId());

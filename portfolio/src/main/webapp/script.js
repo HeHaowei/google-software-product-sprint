@@ -33,13 +33,18 @@ function addRandomGreeting() {
 function getLoginStatus() {
     fetch('/login').then(response => response.json()).then((logObject) => {
         console.log(logObject);
+        const commentForm = document.getElementById('comment-form');
         const loginElement = document.getElementById('login');
-        loginElement.innerHTML = '<h4>Login Status: '+ logObject.loginStatus + '<h4>';
+        loginElement.innerHTML = '<h4>Login Status: '+ logObject.loginStatus + '</h4>';
         if (logObject.loginStatus){
+            loginElement.innerHTML = '<h4> You are now logged in as: ' + logObject.userEmail + '</h4>'
             loginElement.appendChild(createLogButtonElement(logObject.logoutUrl, 'logout'));
+            commentForm.style.display="block";
         }
         else {
+            loginElement.innerHTML = '<h4> Log in to leave your comment!</h4>'
             loginElement.appendChild(createLogButtonElement(logObject.loginUrl, 'login'));
+            commentForm.style.display="none";
         }
     })
 
