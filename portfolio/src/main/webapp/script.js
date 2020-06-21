@@ -97,12 +97,8 @@ function createListElement(comment) {
   timestampElement.setAttribute('class', 'time');
   messageElement.setAttribute('class', 'msg');
 
-  if (typeof(comment.user) === "undefined") {
-    userEmail.innerText = 'Anonymous User';
-  }
-  else { 
       userEmail.innerText = 'User: ' + comment.user;
-  }
+      
   messageElement.innerText = comment.message;
   timestampElement.innerText = convertTime(comment.timestamp);
 
