@@ -28,6 +28,39 @@ function addRandomGreeting() {
 }
 
 /**
+ * This function is to get the login status of the user
+ */
+function getLoginStatus() {
+    fetch('/login').then(response => response.json()).then((loginStatus) => {
+        console.log(loginStatus);
+        const commentForm = document.getElementById('comment-form');
+        const loginElement = document.getElementById('login');
+        loginElement.innerHTML = '<h4>Login Status: '+ loginStatus.loginStatus + '</h4>';
+        if (loginStatus.loginStatus){
+            loginElement.innerHTML = '<h4> You are now logged in as: ' + loginStatus.userEmail + '</h4>'
+            loginElement.appendChild(createLogButtonElement(loginStatus.logoutUrl, 'logout'));
+            commentForm.style.display="block";
+        }
+        else {
+            loginElement.innerHTML = '<h4> Log in to leave your comment!</h4>'
+            loginElement.appendChild(createLogButtonElement(loginStatus.loginUrl, 'login'));
+            commentForm.style.display="none";
+        }
+    })
+
+}
+
+function createLogButtonElement(logUrl, logText) {
+    const logElement = document.createElement('button');
+    logElement.innerText = logText;
+    logElement.addEventListener("click", function(){
+        window.location.href = logUrl;
+    });
+    return logElement;
+}
+
+
+/**
  * This function is to get data from "/data" Servlet 
  */
  
