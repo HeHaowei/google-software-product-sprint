@@ -57,26 +57,12 @@ public class LoginServlet extends HttpServlet {
     String displayname = UserInfoUtil.getUserDisplayname(userService.getCurrentUser().getUserId());
     loginStatus.displayname = displayname;
 
-    // If user has not set a nickname, redirect to nickname page
-    // String nickname = getUserNickname(userService.getCurrentUser().getUserId());
-    // if (nickname == null) {
-    //   response.sendRedirect("/nickname");
-    //   return;
-    // } else {
-    //     logObject.setUsername(nackname);
-    // }
-
     // User is logged in and has a nickname, so the request can proceed
     String logoutUrl = userService.createLogoutURL("/");
     loginStatus.logoutUrl = logoutUrl;
     String json = convertToJsonUsingGson(loginStatus);
     out.println(json);
 
-    // out.println("<p>Hello " + nickname + "!</p>")
-    // out.println("<p>Logout <a href=\"" + logoutUrl + "
-    // \">here</a>.</p>");
-    // out.println("<p>Change your nickname <a href=\"/nickname\">here</a>.</p>");
-    // response.getWriter().println(infoMsg);
   }
 
    /**
