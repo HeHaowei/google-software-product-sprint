@@ -35,28 +35,38 @@ function getLoginStatus() {
         console.log(loginStatus);
         const commentForm = document.getElementById('comment-form');
         const loginElement = document.getElementById('login');
+        console.log(loginStatus.displayname);
+        console.log(typeof loginStatus.displayname);
         loginElement.innerHTML = '<h4>Login Status: '+ loginStatus.loginStatus + '</h4>';
         if (loginStatus.loginStatus){
-            loginElement.innerHTML = '<h4> You are now logged in as: ' + loginStatus.userEmail + '</h4>'
-            loginElement.appendChild(createLogButtonElement(loginStatus.logoutUrl, 'logout'));
-            commentForm.style.display="block";
+            if (loginStatus.displayname === "" || typeof loginStatus.displayname === "undefined") {
+                console.log("displayname has not been set")
+                loginElement.innerHTML = '<h4> Hello, ' + loginStatus.userEmail + '!</h4>'
+                loginElement.appendChild(createRedirectButtonElement('/displayname', 'Set Display name'));
+               }
+               else {
+                    loginElement.innerHTML = '<h4> Hello, ' + loginStatus.displayname + '!</h4>'
+                    loginElement.appendChild(createRedirectButtonElement('/displayname', 'Change Display name'));
+               }
+               loginElement.appendChild(createRedirectButtonElement(loginStatus.logoutUrl, 'logout'));
+               commentForm.style.display="block";
         }
         else {
             loginElement.innerHTML = '<h4> Log in to leave your comment!</h4>'
-            loginElement.appendChild(createLogButtonElement(loginStatus.loginUrl, 'login'));
+            loginElement.appendChild(createRedirectButtonElement(loginStatus.loginUrl, 'login'));
             commentForm.style.display="none";
         }
     })
 
 }
 
-function createLogButtonElement(logUrl, logText) {
-    const logElement = document.createElement('button');
-    logElement.innerText = logText;
-    logElement.addEventListener("click", function(){
-        window.location.href = logUrl;
+function createRedirectButtonElement(redirectUrl, buttonText) {
+    const buttonElement = document.createElement('button');
+    buttonElement.innerText = buttonText;
+    buttonElement.addEventListener("click", function(){
+        window.location.href = redirectUrl;
     });
-    return logElement;
+    return buttonElement;
 }
 
 
@@ -87,11 +97,11 @@ function createListElement(comment) {
   timestampElement.setAttribute('class', 'time');
   messageElement.setAttribute('class', 'msg');
 
-  if (typeof(comment.userEmail) === "undefined") {
+  if (typeof(comment.user) === "undefined") {
     userEmail.innerText = 'Anonymous User';
   }
   else { 
-      userEmail.innerText = 'User: ' + comment.userEmail;
+      userEmail.innerText = 'User: ' + comment.user;
   }
   messageElement.innerText = comment.message;
   timestampElement.innerText = convertTime(comment.timestamp);
