@@ -80,14 +80,23 @@ function getDataFromDataServlet() {
 function createListElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
-  
+
+  const userEmail = document.createElement('h4');
   const timestampElement = document.createElement('h4');
   const messageElement = document.createElement('p');
   timestampElement.setAttribute('class', 'time');
   messageElement.setAttribute('class', 'msg');
+
+  if (typeof(comment.userEmail) === "undefined") {
+    userEmail.innerText = 'Anonymous User';
+  }
+  else { 
+      userEmail.innerText = 'User: ' + comment.userEmail;
+  }
   messageElement.innerText = comment.message;
   timestampElement.innerText = convertTime(comment.timestamp);
 
+  commentElement.appendChild(userEmail);
   commentElement.appendChild(messageElement);
   commentElement.appendChild(timestampElement);
 
