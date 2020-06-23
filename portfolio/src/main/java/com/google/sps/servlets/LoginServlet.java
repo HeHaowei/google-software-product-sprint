@@ -20,6 +20,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 import com.google.gson.Gson;
 import com.google.sps.data.LoginStatus;
+import com.google.sps.util.UserInfoUtil; 
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,14 +54,8 @@ public class LoginServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     loginStatus.userEmail = userEmail;
 
-    // If user has not set a nickname, redirect to nickname page
-    // String nickname = getUserNickname(userService.getCurrentUser().getUserId());
-    // if (nickname == null) {
-    //   response.sendRedirect("/nickname");
-    //   return;
-    // } else {
-    //     logObject.setUsername(nackname);
-    // }
+    String displayname = UserInfoUtil.getUserDisplayname(userService.getCurrentUser().getUserId());
+    loginStatus.displayname = displayname;
 
     // User is logged in and has a nickname, so the request can proceed
     String logoutUrl = userService.createLogoutURL("/");
@@ -68,26 +63,6 @@ public class LoginServlet extends HttpServlet {
     String json = convertToJsonUsingGson(loginStatus);
     out.println(json);
 
-    // out.println("<p>Hello " + nickname + "!</p>")
-    // out.println("<p>Logout <a href=\"" + logoutUrl + "
-    // \">here</a>.</p>");
-    // out.println("<p>Change your nickname <a href=\"/nickname\">here</a>.</p>");
-    // response.getWriter().println(infoMsg);
-  }
-
-  /** Returns the nickname of the user with id, or null if the user has not set a nickname. */
-  private String getUserNickname(String id) {
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query =
-        new Query("UserInfo")
-            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
-    PreparedQuery results = datastore.prepare(query);
-    Entity entity = results.asSingleEntity();
-    if (entity == null) {
-      return null;
-    }
-    String nickname = (String) entity.getProperty("nickname");
-    return nickname;
   }
 
    /**

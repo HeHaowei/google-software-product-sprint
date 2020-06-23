@@ -21,13 +21,13 @@ public final class LoginStatus {
   public String loginUrl;
   public String logoutUrl;
   public String userEmail;
-  public String username;
+  public String displayname;
 
   public LoginStatus() {
       this.loginStatus = false;
       this.loginUrl = null;
       this.logoutUrl = null;
       this.userEmail = null;
-      this.username = null;
+      this.displayname = null;
   }
 }

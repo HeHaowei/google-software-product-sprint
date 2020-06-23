@@ -30,6 +30,8 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
+import com.google.sps.util.UserInfoUtil; 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
@@ -53,8 +55,15 @@ public class DataServlet extends HttpServlet {
       String message = (String) entity.getProperty("message");
       long timestamp = (long) entity.getProperty("timestamp");
       String userEmail = (String) entity.getProperty("userEmail");
-
-      Comment comment = new Comment(id, message, timestamp, userEmail);
+      String userId = (String) entity.getProperty("userId");
+      String displayname = UserInfoUtil.getUserDisplayname(userId);
+      Comment comment;
+      if (displayname != null && displayname != "") {
+          comment = new Comment(id, message, timestamp, displayname);
+      }
+      else {
+          comment = new Comment(id, message, timestamp, userEmail);
+      }
       comments.add(comment);
     }
 
@@ -72,11 +81,13 @@ public class DataServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     String commentMessage = getParameter(request, "comment-area");
     Entity messageEntity = new Entity("Comment");
+    String userId = userService.getCurrentUser().getUserId();
     String userEmail = userService.getCurrentUser().getEmail();
     if (!commentMessage.isEmpty()) {
         long timestamp = System.currentTimeMillis();
         messageEntity.setProperty("message", commentMessage);
         messageEntity.setProperty("timestamp", timestamp);
+        messageEntity.setProperty("userId", userId);
         messageEntity.setProperty("userEmail", userEmail);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(messageEntity);
