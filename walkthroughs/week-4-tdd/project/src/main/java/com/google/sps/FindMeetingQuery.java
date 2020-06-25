@@ -24,7 +24,7 @@ import java.util.Set;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    // throw new UnsupportedOperationException("TODO: Implement this method.");
+      
     ArrayList<TimeRange> event_time = new ArrayList<TimeRange>();
     Set<String> request_attendees = new HashSet<String>(request.getAttendees());
     for (Event event: events) {
