@@ -58,9 +58,9 @@ public final class FindMeetingQuery {
    * Then the above example will become:
    * start_time: (1, 2, 4, 9)
    * end_time: (3, 5, 8, 10)
-   * For i from 0 to the size of the eventList, if start_time[i + 1] > end_time[i] or i = size - 1, meaning
-   * there generates an interval: [start_time[j], end_time[i]], j is the starting point of the interval
-   * and j will be updated to i + 1 after each merge operation 
+   * For endSection from 0 to the (size - 1) of the eventList, if start_time[endSection + 1] > end_time[endSection] or endSection = size - 1, meaning
+   * there generates an interval: [start_time[beginSection], end_time[endSection]], beginSection is the starting point of the interval
+   * and beginSection will be updated to startSection + 1 after each merge operation 
    */
 
   private ArrayList<TimeRange> mergeEventTime(ArrayList<TimeRange> event_time) {
@@ -74,11 +74,11 @@ public final class FindMeetingQuery {
       ArrayList<TimeRange> event_time_end_order = new ArrayList<TimeRange>(event_time);
       ArrayList<TimeRange> result = new ArrayList<TimeRange>();
 
-      for (int i = 0, j = 0; i < size; i++) {
+      for (int endSection = 0, beginSection = 0; endSection < size; endSection++) {
 
-          if ((i + 1 == size) || (event_time_start_order.get(i + 1).start() > event_time_end_order.get(i).end())) {
-              result.add(TimeRange.fromStartEnd(event_time_start_order.get(j).start(), event_time_end_order.get(i).end(), false));
-              j = i + 1;
+          if ((endSection + 1 == size) || (event_time_start_order.get(endSection + 1).start() > event_time_end_order.get(endSection).end())) {
+              result.add(TimeRange.fromStartEnd(event_time_start_order.get(beginSection).start(), event_time_end_order.get(endSection).end(), false));
+              beginSection = endSection + 1;
           }
       }
       return result;
